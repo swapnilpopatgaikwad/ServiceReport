@@ -1,0 +1,146 @@
+﻿@model ServiceReport.Data.ReportService
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ReportService</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="EmployeeID" class="control-label"></label>
+                <input asp-for="EmployeeID" class="form-control" />
+                <span asp-validation-for="EmployeeID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EngineerName" class="control-label"></label>
+                <input asp-for="EngineerName" class="form-control" />
+                <span asp-validation-for="EngineerName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+          @*   <div class="form-group">
+                <label asp-for="OtherCompanyName" class="control-label"></label>
+                <input asp-for="OtherCompanyName" class="form-control" />
+                <span asp-validation-for="OtherCompanyName" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="MachineSerialNumber" class="control-label"></label>
+                <input asp-for="MachineSerialNumber" class="form-control" />
+                <span asp-validation-for="MachineSerialNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LaserPower" class="control-label"></label>
+                <input asp-for="LaserPower" class="form-control" />
+                <span asp-validation-for="LaserPower" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyAddress" class="control-label"></label>
+                <input asp-for="CompanyAddress" class="form-control" />
+                <span asp-validation-for="CompanyAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MachineType" class="control-label"></label>
+                <select asp-for="MachineType" class="form-control"></select>
+                <span asp-validation-for="MachineType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceType" class="control-label"></label>
+                <select asp-for="ServiceType" class="form-control"></select>
+                <span asp-validation-for="ServiceType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkingDays" class="control-label"></label>
+                <input asp-for="WorkingDays" class="form-control" />
+                <span asp-validation-for="WorkingDays" class="text-danger"></span>
+            </div>
+            @* <div class="form-group">
+                <label asp-for="SelectedAreas" class="control-label"></label>
+                <input asp-for="SelectedAreas" class="form-control" />
+                <span asp-validation-for="SelectedAreas" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Diagnosis" class="control-label"></label>
+                <textarea asp-for="Diagnosis" class="form-control"></textarea>
+                <span asp-validation-for="Diagnosis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerFeedback" class="control-label"></label>
+                <textarea asp-for="CustomerFeedback" class="form-control"></textarea>
+                <span asp-validation-for="CustomerFeedback" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SpareParts" class="control-label"></label>
+                <input asp-for="SpareParts" class="form-control" />
+                <span asp-validation-for="SpareParts" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SparePartStatus" class="control-label"></label>
+                <select asp-for="SparePartStatus" class="form-control"></select>
+                <span asp-validation-for="SparePartStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CustomerSealSign" class="control-label"></label>
+                <input asp-for="CustomerSealSign" class="form-control" />
+                <span asp-validation-for="CustomerSealSign" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImageBase64" class="control-label"></label>
+                <input asp-for="ImageBase64" class="form-control" />
+                <span asp-validation-for="ImageBase64" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TokenNumber" class="control-label"></label>
+                <input asp-for="TokenNumber" class="form-control" />
+                <span asp-validation-for="TokenNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedDate" class="control-label"></label>
+                <input asp-for="CreatedDate" class="form-control" />
+                <span asp-validation-for="CreatedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifiedDate" class="control-label"></label>
+                <input asp-for="ModifiedDate" class="form-control" />
+                <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

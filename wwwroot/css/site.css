@@ -1,0 +1,110 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+/* Background settings */
+body {
+    background: url('https://example.com/background-image.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for readability */
+    z-index: 1;
+}
+
+/* Container for the form */
+.form-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Form card styling */
+.form-card {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 600px;
+}
+
+h1 {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.form-group input {
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+input[type="submit"], .btn-secondary {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+    input[type="submit"]:hover, .btn-secondary:hover {
+        background-color: #0056b3;
+        color: white;
+    }
+
+/* Toastr Customization */
+#toast-container > .toast {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 8px;
+}
+
+#toast-container > .toast-error {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+#toast-container > .toast-success {
+    background-color: #28a745;
+    color: #fff;
+}
+.input-group-text {
+    background-color: #f8f9fa; /* Light background for the icons */
+    border: 1px solid #ced4da; /* Consistent border with input */
+}
+
+.input-group {
+    margin-top: 10px; /* Space above the input group */
+}
+

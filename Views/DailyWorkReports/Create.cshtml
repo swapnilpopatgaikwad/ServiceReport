@@ -1,0 +1,251 @@
+﻿    @model ServiceReport.Data.DailyWorkReportViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!-- Enhanced Styling -->
+<style>
+    /* Page Background */
+    body {
+        background-color: #eaf6ff; /* Light sky blue */
+        font-family: Arial, sans-serif;
+        color: #333;
+    }
+
+    /* Center Container */
+    .container {
+        max-width: 800px;
+        margin-top: 30px;
+        padding: 0 20px;
+    }
+
+    /* Card Style */
+    .card {
+        background-color: #ffffff; /* White */
+        border: 1px solid #dce3ea; /* Soft border */
+        border-radius: 8px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    /* Header Style */
+    .card-header {
+        background-color: #0056b3; /* Darker blue */
+        color: #ffffff;
+        padding: 15px;
+        text-align: center;
+    }
+
+    /* Form Elements */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            color: #0056b3; /* Deep blue */
+            font-weight: bold;
+        }
+
+    .form-control, .input-group-text {
+        border-radius: 4px;
+        border: 1px solid #ccd7e0;
+        transition: box-shadow 0.3s ease;
+    }
+
+        .form-control:focus {
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            border-color: #007bff;
+        }
+
+    /* Button Styling */
+    .btn {
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        padding: 8px 16px;
+        font-size: 16px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .btn:hover {
+        transform: scale(1.05);
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    /* Text Centered for Submit Button */
+    .form-group.text-center {
+        padding-top: 10px;
+    }
+</style>
+
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h4>Daily Work Report </h4>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" onsubmit="return confirmSubmit()">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row mb-3">
+                    <!-- Employee ID -->
+                    <div class="col-md-6">
+                        <label asp-for="EmplyoeeID" class="form-label">Employee ID</label>
+                        <input asp-for="EmplyoeeID" class="form-control" readonly />
+                        <span asp-validation-for="EmplyoeeID" class="text-danger"></span>
+                    </div>
+
+                    <!-- Engineer Name -->
+                    <div class="col-md-6">
+                        <label asp-for="EngineerName" class="form-label">Engineer Name</label>
+                        <input asp-for="EngineerName" class="form-control" readonly />
+                        <span asp-validation-for="EngineerName" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <!-- Company Name -->
+                <div class="form-group">
+                    <label asp-for="CompanyName">Company Name</label>
+                    <input asp-for="CompanyName" class="form-control" />
+                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                </div>
+
+                <!-- Machine Type -->
+                <!-- Machine and Service Type -->
+                <div class="row mb-3">
+                    <div class="form-group">
+                        <label asp-for="MachineType" class="control-label"></label>
+                        <select asp-for="MachineType" class="form-control" asp-items="ViewBag.MachineTypeOptions">
+                            <option value="">Select Machine Type</option>
+                        </select>
+                        <span asp-validation-for="MachineType" class="text-danger"></span>
+                    </div>
+
+                <!-- Report Date -->
+                <div class="form-group">
+                    <label asp-for="ReportDate">Report Date</label>
+                    <input asp-for="ReportDate" class="form-control" type="date" value="@DateTime.UtcNow.ToString("yyyy-MM-dd")" readonly />
+                    <span asp-validation-for="ReportDate" class="text-danger"></span>
+                </div>
+     <div class="row mb-3">
+    <!-- In Time -->
+    <div class="col-md-6">
+        <label asp-for="InTime" class="form-label">In Time</label>
+        <input asp-for="InTime" class="form-control" type="time" onclick="this.showPicker()" onchange="calculateWorkingHours()" />
+        <span asp-validation-for="InTime" class="text-danger"></span>
+    </div>
+
+    <!-- Out Time -->
+    <div class="col-md-6">
+        <label asp-for="OutTime" class="form-label">Out Time</label>
+        <input asp-for="OutTime" class="form-control" type="time" onclick="this.showPicker()" onchange="calculateWorkingHours()" />
+        <span asp-validation-for="OutTime" class="text-danger"></span>
+    </div>
+</div>
+
+
+                <!-- Working Hours -->
+                <div class="form-group">
+                    <label asp-for="WorkingHours">Working Hours</label>
+                    <div class="input-group">
+                        <input asp-for="WorkingHours" class="form-control" readonly />
+                        <div class="input-group-append">
+                            <span class="input-group-text">hrs</span>
+                        </div>
+                    </div>
+                    <span asp-validation-for="WorkingHours" class="text-danger"></span>
+                </div>
+
+                <!-- Additional Text Areas -->
+                <div class="form-group">
+                    <label asp-for="WorkActivity">Work Activity</label>
+                    <textarea asp-for="WorkActivity" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="WorkActivity" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CustomerRemark">Customer Remark</label>
+                    <textarea asp-for="CustomerRemark" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="CustomerRemark" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CustomerSealAndSign">Customer Seal & Sign</label>
+                    <textarea asp-for="CustomerSealAndSign" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="CustomerSealAndSign" class="text-danger"></span>
+                </div>
+
+
+                <!-- Submit and Back Buttons -->
+                <div class="form-group text-center">
+                    <!-- Submit Button -->
+                    <input type="submit" value="Submit" class="btn btn-success mx-2" />
+
+                    <!-- Back to Dashboard Button -->
+                    <a href="@Url.Action("ServiceDashboard", "Dashboard")" class="btn btn-secondary mx-2" onclick="return confirmBack()">Back to Dashboard</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function calculateWorkingHours() {
+        var inTime = document.querySelector('input[name="InTime"]').value;
+        var outTime = document.querySelector('input[name="OutTime"]').value;
+
+        if (inTime && outTime) {
+            var inTimeParts = inTime.split(':');
+            var outTimeParts = outTime.split(':');
+
+            var inDate = new Date();
+            inDate.setHours(inTimeParts[0], inTimeParts[1], 0);
+
+            var outDate = new Date();
+            outDate.setHours(outTimeParts[0], outTimeParts[1], 0);
+
+            var difference = outDate - inDate;
+
+            if (difference < 0) {
+                document.querySelector('input[name="WorkingHours"]').value = "00:00";
+                return;
+            }
+
+            var hours = Math.floor(difference / 1000 / 60 / 60);
+            var minutes = Math.floor((difference / 1000 / 60) % 60);
+
+            var formattedHours = String(hours).padStart(2, '0');
+            var formattedMinutes = String(minutes).padStart(2, '0');
+            document.querySelector('input[name="WorkingHours"]').value = formattedHours + ':' + formattedMinutes;
+        } else {
+            document.querySelector('input[name="WorkingHours"]').value = '';
+        }
+    }
+
+    function confirmSubmit() {
+        return confirm("Are you sure you want to submit this report?");
+    }
+
+    function confirmBack() {
+        return confirm("Are you sure you want to go back? Any unsaved changes will be lost.");
+    }
+</script>

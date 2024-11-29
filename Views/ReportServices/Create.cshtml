@@ -1,0 +1,392 @@
+﻿@model ServiceReport.Data.ReportServiceViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow border-0 bg-light">
+                <div class="card-header text-center bg-primary text-white">
+                    <h2>Create Service Report</h2>
+                </div>
+                <div class="card-body p-4">
+                    <h4 class="text-secondary mb-3">Report Service Details</h4>
+                    <form asp-action="Create">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <!-- Employee and Engineer Details -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="EmployeeID" class="form-label text-dark">Employee ID</label>
+                                <input asp-for="EmployeeID" class="form-control bg-secondary text-white" readonly data-bs-toggle="tooltip" data-bs-placement="top" title="Automatically filled" />
+                                <span asp-validation-for="EmployeeID" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="EngineerName" class="form-label text-dark">Engineer Name</label>
+                                <input asp-for="EngineerName" class="form-control bg-secondary text-white" readonly data-bs-toggle="tooltip" data-bs-placement="top" title="Automatically filled" />
+                                <span asp-validation-for="EngineerName" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Company Information -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="MachineSerialNumber" class="form-label text-primary">Machine Serial Number</label>
+                                <input asp-for="MachineSerialNumber" id="MachineSerialNumber" class="form-control bg-white"
+                                       placeholder="e.g., SN123456" />
+                                <span asp-validation-for="MachineSerialNumber" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="CompanyName" class="form-label text-primary">Company Name</label>
+                                <input asp-for="CompanyName" id="CompanyName" class="form-control bg-white" placeholder="e.g., ABC Corp" readonly />
+                                <span asp-validation-for="CompanyName" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="CompanyAddress" class="form-label text-primary">Company Address</label>
+                                <input asp-for="CompanyAddress" id="CompanyAddress" class="form-control bg-white" placeholder="e.g., 123 Street Name" readonly />
+                                <span asp-validation-for="CompanyAddress" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="LaserPower" class="form-label text-primary">Laser Power</label>
+                                <input asp-for="LaserPower" id="LaserPower" class="form-control bg-white" placeholder="e.g., 150W"  />
+                                <span asp-validation-for="LaserPower" class="text-danger"></span>
+                            </div>
+                        </div>
+
+
+                       @*  <!-- Machine and Service Type -->
+                        <div class="row mb-3">
+                            <div class="form-group">
+                                <label asp-for="MachineType" class="control-label"></label>
+                                <select asp-for="MachineType" class="form-control" asp-items="ViewBag.MachineTypeOptions">
+                                    <option value="">Select Machine Type</option>
+                                </select>
+                                <span asp-validation-for="MachineType" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ServiceType" class="control-label"></label>
+                                <select asp-for="ServiceType" class="form-control" asp-items="ViewBag.ServiceTypeOptions">
+                                    <option value="">Select Service Type</option>
+                                </select>
+                                <span asp-validation-for="ServiceType" class="text-danger"></span>
+                            </div>
+                        </div> *@
+                        <!-- Machine and Service Type in a Single Div -->
+                        <div class="row mb-3">
+                            <!-- Machine Type -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="MachineType" class="control-label"></label>
+                                    <select asp-for="MachineType" class="form-control" asp-items="ViewBag.MachineTypeOptions">
+                                        <option value="">Select Machine Type</option>
+                                    </select>
+                                    <span asp-validation-for="MachineType" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Service Type -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label asp-for="ServiceType" class="control-label"></label>
+                                    <select asp-for="ServiceType" class="form-control" asp-items="ViewBag.ServiceTypeOptions">
+                                        <option value="">Select Service Type</option>
+                                    </select>
+                                    <span asp-validation-for="ServiceType" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Service Dates -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="StartDate" class="form-label text-primary">Start Date</label>
+                                <input asp-for="StartDate" id="StartDate" type="date" class="form-control bg-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Select start date" onchange="calculateWorkingDays()" />
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="EndDate" class="form-label text-primary">End Date</label>
+                                <input asp-for="EndDate" id="EndDate" type="date" class="form-control bg-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Select end date" onchange="calculateWorkingDays()" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                      
+
+                        <!-- Working Days and Status -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="WorkingDays" class="form-label text-primary">Total Days (Including weekends)</label>
+                                <input asp-for="WorkingDays" id="WorkingDays" class="form-control bg-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Total days including weekends" readonly />
+                                <span asp-validation-for="WorkingDays" class="text-danger"></span>
+                            </div>
+                        </div>
+                                                
+                         @*    <div class="mb-3">
+                                <label class="form-label text-primary">Selected Areas</label>
+                                <div>
+                                    @foreach (var area in Model.AreaOptions)
+                                    {
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" name="SelectedAreas" value="@area.Value"
+                                            @(Model.SelectedAreas != null && Model.SelectedAreas.Contains(int.Parse(area.Value)) ? "checked" : "") />
+                                            <label class="form-check-label">@area.Text</label>
+                                        </div>
+                                    }
+                                </div>
+                                <span asp-validation-for="SelectedAreas" class="text-danger"></span>
+                            </div> *@
+                            <div class="mb-3">
+                                <label class="form-label text-primary">Selected Areas</label>
+                                <div>
+                                    @foreach (var area in Model.AreaOptions)
+                                    {
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input area-checkbox" name="SelectedAreas" value="@area.Value"
+                                            @(Model.SelectedAreas != null && Model.SelectedAreas.Contains(int.Parse(area.Value)) ? "checked" : "")
+                                                   data-area="@area.Text" />
+                                            <label class="form-check-label">@area.Text</label>
+                                        </div>
+                                        <div id="problems-@area.Value" class="problems-list" style="display: none; margin-left: 20px;">
+                                            <label>Problems:</label>
+                                            @* Problem options will be added dynamically *@
+                                        </div>
+                                    }
+                                </div>
+                                <span asp-validation-for="SelectedAreas" class="text-danger"></span>
+                            </div>
+
+                            <script>
+                                // Define the problems for each area
+                                const problemsByArea = {
+                                    "TRAINING": ["APPLICATION TRAINING", "OPERATIONAL TRAINING", "SOFTWARE TRAINING", "NESTING TRAINING", "OTHERS"],
+                                    "MACHINE": ["DRIVE ALARM", "HARD LIMIT ALARM", "ZIG ZAG CUTTING", "CAPACITANCE SENSOR", "AXIS SENSOR", "MOTION NOISE", "GAS PRESSURE ALARM", "AXIS SOFT LIMIT", "GAS LEAKAGE", "GAS FLOW", "DIAGONAL", "COMMUNICATION BREAK", "OVALITY / CIRCULARITY", "EPR ISSUE", "OTHERS"],
+                                    // Add other areas and their problems here
+                                };
+
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    // Toggle problems list visibility and populate problem options
+                                    document.querySelectorAll('.area-checkbox').forEach(areaCheckbox => {
+                                        areaCheckbox.addEventListener('change', function () {
+                                            const areaId = this.value;
+                                            const areaText = this.getAttribute('data-area');
+                                            const problemDiv = document.getElementById(`problems-${areaId}`);
+
+                                            // Toggle visibility based on checkbox state
+                                            if (this.checked) {
+                                                populateProblems(areaId, areaText, problemDiv);
+                                                problemDiv.style.display = 'block';
+                                            } else {
+                                                problemDiv.style.display = 'none';
+                                                problemDiv.innerHTML = '';  // Clear problems list when unchecked
+                                            }
+                                        });
+
+                                        // If checkbox is pre-checked, load the problems
+                                        if (areaCheckbox.checked) {
+                                            const areaId = areaCheckbox.value;
+                                            const areaText = areaCheckbox.getAttribute('data-area');
+                                            const problemDiv = document.getElementById(`problems-${areaId}`);
+                                            populateProblems(areaId, areaText, problemDiv);
+                                            problemDiv.style.display = 'block';
+                                        }
+                                    });
+                                });
+
+                                // Function to populate problems list for each area
+                                function populateProblems(areaId, areaText, container) {
+                                    const problems = problemsByArea[areaText];
+                                    if (!problems) return;
+
+                                    container.innerHTML = problems.map(problem => `
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" name="SelectedProblems[${areaId}]" value="${problem}">
+                                                <label class="form-check-label">${problem}</label>
+                                            </div>
+                                        `).join('');
+                                }
+                            </script>
+
+
+                        </div>
+
+                        <!-- Descriptions and Feedback -->
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label asp-for="Description" class="form-label text-secondary">Description</label>
+                                <textarea asp-for="Description" class="form-control bg-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Provide details about the service"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label asp-for="Diagnosis" class="form-label text-secondary">Diagnosis</label>
+                                <textarea asp-for="Diagnosis" class="form-control bg-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Provide the diagnosis of the issue"></textarea>
+                                <span asp-validation-for="Diagnosis" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="form-group">
+                                <label asp-for="Status" class="control-label"></label>
+                                <select asp-for="Status" class="form-control" asp-items="ViewBag.StatusOptions">
+                                    <option value="">Select Status</option>
+                                </select>
+                                <span asp-validation-for="Status" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information and Customer Seal -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="SpareParts" class="form-label text-primary">Spare Parts</label>
+                                <input asp-for="SpareParts" class="form-control bg-white" data-bs-toggle="tooltip" data-bs-placement="top" title="List any spare parts used" />
+                                <span asp-validation-for="SpareParts" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SparePartStatus" class="control-label"></label>
+                                <select asp-for="SparePartStatus" class="form-control" asp-items="ViewBag.SparePartStatusOptions">
+                                    <option value="">Select Spare Part Status</option>
+                                </select>
+                                <span asp-validation-for="SparePartStatus" class="text-danger"></span>
+                            </div>
+
+
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label asp-for="CustomerFeedback" class="form-label text-secondary">Customer Feedback</label>
+                                <textarea asp-for="CustomerFeedback" class="form-control bg-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Provide the diagnosis of the issue"></textarea>
+                                <span asp-validation-for="CustomerFeedback" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            
+                            <div class="col-md-6">
+                                <label asp-for="CustomerSealSign" class="form-label text-primary">Customer Seal Sign</label>
+                                <input asp-for="CustomerSealSign" class="form-control bg-white" data-bs-toggle="tooltip" data-bs-placement="top" title="Enter customer seal sign" />
+                                <span asp-validation-for="CustomerSealSign" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="ImageBase64" class="form-label text-primary">Image</label>
+                                <input asp-for="ImageBase64" type="file" class="form-control bg-white"
+                                       accept="image/*" capture="environment"
+                                       data-bs-toggle="tooltip" data-bs-placement="top"
+                                       title="Upload image or take a picture" />
+                                <span asp-validation-for="ImageBase64" class="text-danger"></span>
+                            </div>
+
+                        </div>
+                       @*  <div class="row mb-3">
+                            
+                        </div> *@
+
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-primary me-2">Submit</button>
+                            <!-- Back to Dashboard Button -->
+                            <a href="@Url.Action("ServiceDashboard", "Dashboard")" class="btn btn-secondary mx-2" onclick="return confirmBack()">Back to Dashboard</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Initialize Bootstrap tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+</script>
+
+<script>
+    document.querySelector('input[type="file"]').addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                // Here you can handle the Base64 string (reader.result)
+                // You can assign it to a hidden input or use it directly
+                console.log(reader.result); // For debugging
+                // For example, you might set it in a hidden field
+                document.getElementById('ImageBase64').value = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+<script>
+    // Function to calculate the total days (including weekends) between start and end date
+    function calculateWorkingDays() {
+        const startDate = document.getElementById("StartDate").value;
+        const endDate = document.getElementById("EndDate").value;
+
+        if (startDate && endDate) {
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+            let totalDays = 0;
+
+            // Loop through each date between start and end date
+            for (let date = new Date(start); date <= end; date.setDate(date.getDate() + 1)) {
+                totalDays++;  // Increment total days regardless of weekends
+            }
+
+            // Display the total days in the input field
+            document.getElementById("WorkingDays").value = totalDays;
+        }
+    }
+
+    // Display current date in MM/DD/YYYY format
+    window.onload = function () {
+        const currentDate = new Date();
+        const formattedDate = formatDate(currentDate);
+
+        // Set today's date as default for Start and End Date inputs
+        document.getElementById("StartDate").value = formattedDate;
+        document.getElementById("EndDate").value = formattedDate;
+    }
+
+    // Helper function to format date in MM/DD/YYYY format
+    function formatDate(date) {
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const day = ('0' + date.getDate()).slice(-2);
+        const year = date.getFullYear();
+        return `${month}/${day}/${year}`;
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Event handler for when the machine serial number input loses focus
+        $('#MachineSerialNumber').on('blur', function () {
+            var machineSerialNumber = $(this).val();
+
+            if (machineSerialNumber) {
+                // Make an AJAX call to fetch machine details
+                $.ajax({
+                    url: '@Url.Action("GetMachineDetails", "ReportServices")',
+                    data: { machineSerialNumber: machineSerialNumber },
+                    type: 'GET',
+                    success: function (data) {
+                        // Populate the fields with the fetched data
+                        $('#CompanyName').val(data.companyName);
+                        $('#CompanyAddress').val(data.companyAddress);
+                        $('#LaserPower').val(data.laserPower);
+                    },
+                    error: function () {
+                        alert("Machine data not found or error occurred.");
+                        $('#CompanyName').val('');
+                        $('#CompanyAddress').val('');
+                        $('#LaserPower').val('');
+                    }
+                });
+            }
+        });
+    });
+</script>
+

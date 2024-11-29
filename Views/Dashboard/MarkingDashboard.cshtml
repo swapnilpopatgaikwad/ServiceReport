@@ -1,0 +1,168 @@
+﻿@{
+    ViewData["Title"] = "Marking Dashboard Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Marking Dashboard</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8; /* Light background for the whole page */
+            color: #2c3e50; /* Dark text for readability */
+            display: flex;
+        }
+
+        /* Sidebar styles */
+        .sidebar {
+            width: 250px;
+            background-color: #34495e; /* Dark background for sidebar */
+            color: white;
+            padding: 20px;
+            height: 100vh; /* Full height */
+            position: fixed; /* Fix the sidebar */
+            display: flex;
+            flex-direction: column;
+        }
+
+            .sidebar h2 {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+                color: #ecf0f1; /* Light color for sidebar heading */
+            }
+
+            .sidebar a {
+                display: block;
+                padding: 10px;
+                color: #ecf0f1; /* Light color for links */
+                text-decoration: none;
+                margin: 10px 0;
+                border-radius: 5px;
+                transition: background-color 0.3s;
+            }
+
+                .sidebar a:hover {
+                    background-color: #1abc9c; /* Highlight color on hover */
+                }
+
+        /* Main content area */
+        .main {
+            margin-left: 270px; /* Space for the sidebar */
+            padding: 20px;
+            width: calc(100% - 270px); /* Adjust width accordingly */
+        }
+
+        .header {
+            background-color: #ffffff; /* White background for header */
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+            .header h1 {
+                margin: 0;
+                color: #34495e; /* Dark color for heading */
+            }
+
+        .icon-container {
+            display: grid; /* Grid layout for icons */
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
+            gap: 20px; /* Space between cards */
+        }
+
+        .icon-card {
+            text-decoration: none;
+            color: #2c3e50; /* Dark text color */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff; /* White background for cards */
+            border: 1px solid #ddd; /* Light border for cards */
+            border-radius: 10px;
+            padding: 30px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .icon-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .icon-card img {
+                width: 80px; /* Consistent icon size */
+                height: 80px; /* Consistent icon size */
+                margin-bottom: 10px;
+                transition: transform 0.2s;
+            }
+
+                .icon-card img:hover {
+                    transform: scale(1.1); /* Slightly enlarge on hover */
+                }
+
+            .icon-card span {
+                font-weight: bold;
+                font-size: 1.2em;
+                margin-top: 10px; /* Space above text */
+            }
+
+        .logout-button {
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #e74c3c; /* Logout button color */
+            color: white;
+            border-radius: 5px;
+            margin-top: 30px;
+            transition: background-color 0.3s, transform 0.2s;
+            display: inline-block;
+        }
+
+            .logout-button:hover {
+                background-color: #c0392b; /* Darker red on hover */
+                transform: scale(1.05);
+            }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Navigation</h2>
+        <a id="dailyWorkReportLink" asp-controller="DailyWorkReports" asp-action="Index">Daily Work Report</a>
+        <a id="serviceLink" asp-controller="ReportServices" asp-action="Index">Service Report</a>
+      @*   <a id="installationReportLink" href="./installation report.html">Installation Report</a> *@
+        <button class="logout-button">Logout</button>
+      @*   <!-- Logout Button -->
+        <a href="#" class="btn btn-danger mx-2" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+
+        <!-- Hidden Form to Logout -->
+        <form id="logout-form" action="@Url.Action("Index", "Home")" method="post" style="display: none;"> *@
+    </div>
+    <div class="main">
+        <div class="header">
+            <h1>Welcome to the Engineer Dashboard</h1>
+        </div>
+        <div class="icon-container">
+         @*    <a class="icon-card" id="dailyWorkReportLink" asp-controller="DailyWorkReports" asp-action="Index">
+                <img src="~/images/dailyreport.png" alt="Daily Work Report Icon">
+                <span>Daily Work Report</span>
+            </a> *@
+            <a class="icon-card" id="serviceLink" asp-controller="ReportServices" asp-action="Index">
+                <img src="~/images/service.png" alt="Service Engineer Icon">
+                <span>Service Report</span>
+            </a>
+            <a class="icon-card" id="installationReportLink" href="./installation report.html">
+                <img src="~/images/install.jpg" alt="Installation Report Icon">
+                <span>Installation Report</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+

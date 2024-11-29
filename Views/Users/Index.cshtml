@@ -1,0 +1,93 @@
+﻿
+ @model IEnumerable<ServiceReport.Models.User>
+
+@{
+    ViewData["Title"] = "User List";
+}
+<style>
+    .table-responsive {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .btn {
+        min-width: 100px; /* Adjust button width as necessary */
+    }
+</style>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                <!-- Add the "Create New User" button to the navbar -->
+                <a class="btn btn-success btn-lg" asp-action="Create"><i class="fa fa-plus"></i> Create New User</a>
+                </li>
+                <li class="nav-item">
+                    <!-- User List Button -->
+                    <a class="btn btn-primary mx-1" asp-action="Index"><i class="fa fa-list"></i> User List</a>
+                </li>   
+                <li class="nav-item">
+                    <a class="btn btn-primary mx-1" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-warning mx-1" asp-area="" asp-controller="Roles" asp-action="Index">Role</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-info mx-1" asp-area="" asp-controller="UserRoles" asp-action="Index">UserRole</a>
+                </li>
+            </ul>
+           
+        </div>
+    </div>
+</nav>
+
+<h1 class="mb-4">User List</h1>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="thead-dark text-center">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.EmplyoeeID)</th>
+                <th>@Html.DisplayNameFor(model => model.FirstName)</th>
+                <th>@Html.DisplayNameFor(model => model.LastName)</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th>@Html.DisplayNameFor(model => model.ContactNumber)</th>
+                <th>Password</th>
+                <th>@Html.DisplayNameFor(model => model.Username)</th>
+                <th>@Html.DisplayNameFor(model => model.Department)</th>
+                <th>@Html.DisplayNameFor(model => model.CreatedDate)</th>
+                <th>@Html.DisplayNameFor(model => model.ModifiedDate)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.EmplyoeeID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.FirstName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.LastName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ContactNumber)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Password)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Username)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Department)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ModifiedDate)</td>
+                    <td class="text-center">
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-info btn-lg mx-1" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i> Edit</a>
+                            <a class="btn btn-secondary btn-lg mx-1" asp-action="Details" asp-route-id="@item.Id"><i class="fa fa-info-circle"></i> Details</a>
+                            <a class="btn btn-danger btn-lg mx-1" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-trash"></i> Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

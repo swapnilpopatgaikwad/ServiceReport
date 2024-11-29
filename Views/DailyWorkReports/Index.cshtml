@@ -1,0 +1,107 @@
+﻿@model IEnumerable<ServiceReport.Models.DailyWorkReport>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmplyoeeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EngineerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MachineType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReportDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OutTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkingHours)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkActivity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerRemark)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerSealAndSign)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmplyoeeID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EngineerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MachineType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReportDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.InTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OutTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkingHours)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WorkActivity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerRemark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerSealAndSign)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

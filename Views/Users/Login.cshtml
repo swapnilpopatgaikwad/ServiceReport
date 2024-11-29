@@ -1,0 +1,183 @@
+﻿    @model ServiceReport.Data.UserLoginModel
+
+    @{
+        ViewData["Title"] = "Login";
+    }
+
+    <!-- Add background image to the form -->
+    <style>
+        /* Container Styling */
+        .login-form {
+            /* Soft neutral gradient background for the container */
+            background: linear-gradient(135deg, #f0f4f7, /* Light grayish blue */
+            #e2e8ec); /* Soft gray */
+            padding: 40px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+            background-color: rgba(255, 255, 255, 0.85); 
+            border: 1px solid #d1d9e0;
+        }
+
+        /* Styling for the form labels */
+        .form-floating label {
+            color: #333; 
+            font-weight: 500;
+        }
+
+        /* Styling for input fields */
+        .form-control {
+            background-color: #ffffff; 
+            color: #333; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; /* Rounded corners for inputs */
+            padding: 10px; /* Add padding for better spacing */
+            transition: border-color 0.3s, box-shadow 0.3s; 
+        }
+
+            /* Focus state for input fields */
+            .form-control:focus {
+                border-color: #4a90e2; /* Blue border for focus */
+                box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); 
+
+        /* Styling for the login button */
+        .btn-primary {
+            background-color: #4a90e2; 
+            border-color: #4a90e2; 
+            color: #fff; /* White text for contrast */
+            font-weight: bold; /* Bold text for emphasis */
+            border-radius: 5px; /* Smooth rounded corners */
+            padding: 12px 20px; /* Increased padding for better button size */
+            transition: background-color 0.3s, transform 0.2s; /* Smooth transition on hover */
+        }
+
+            /* Hover effect for the button */
+            .btn-primary:hover {
+                background-color: #357ab8; /* Slightly darker blue for hover */
+                border-color: #357ab8; /* Update border color on hover */
+                transform: scale(1.05); /* Slightly enlarge button on hover */
+            }
+
+        /* Login heading styling */
+        .login-heading {
+            text-align: center;
+            font-size: 2.5rem; /* Standard size for the heading */
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #4a90e2; /* Light blue text color for modern look */
+            font-family: 'Arial', sans-serif; /* Standard clean font */
+            letter-spacing: 1px; /* Slight spacing for a more refined look */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); /* Subtle text shadow for depth */
+        }
+
+        .password-toggle {
+            font-size: 1.2rem; /* Adjust size as needed */
+            color: #6c757d; /* A subtle color for the icon */
+        }
+
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+
+    <div class="container-fluid login-form-container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7 col-sm-9">
+           
+
+                <form class="login-form" asp-action="Login">
+                    <!-- Add the heading for User Login -->
+                    <h1 class="login-heading">User Login</h1>
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="EmplyoeeID" class="form-control" id="employeeId" placeholder="Enter Employee ID" onblur="fetchUsername()" />
+                        <label asp-for="EmplyoeeID" class="control-label">Employee ID</label>
+                        <span asp-validation-for="EmplyoeeID" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Username" class="form-control" id="username" placeholder="Enter Username" readonly  />
+                        <label asp-for="Username" class="control-label">Username</label>
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-floating mb-3 position-relative">
+                        <input asp-for="Password" id="password" type="password" class="form-control" placeholder="Enter Password" />
+                        <label asp-for="Password" class="control-label">Password</label>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+
+                        <!-- Add the visibility toggle icon -->
+                        <span class="password-toggle position-absolute" onclick="togglePasswordVisibility()" style="top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;">
+                            <i id="toggleIcon" class="fas fa-eye"></i>
+                        </span>
+                    </div>
+
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                   @*  <div class="card-footer text-center">
+                        <a class="btn btn-link" href="@Url.Action("Register", "Users")">Register New User</a>
+                    </div> *@
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+
+    @* <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+     *@
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+
+        <script>
+            function togglePasswordVisibility() {
+                var passwordField = document.getElementById("password");
+                var toggleIcon = document.getElementById("toggleIcon");
+
+                if (passwordField.type === "password") {
+                    passwordField.type = "text"; // Show password
+                    toggleIcon.classList.remove("fa-eye"); // Switch icon to "eye-slash"
+                    toggleIcon.classList.add("fa-eye-slash");
+                } else {
+                    passwordField.type = "password"; // Hide password
+                    toggleIcon.classList.remove("fa-eye-slash"); // Switch icon back to "eye"
+                    toggleIcon.classList.add("fa-eye");
+                }
+            }
+        </script>
+        <script>
+            function fetchUsername() {
+                var employeeId = document.getElementById("employeeId").value;
+
+                // Only fetch if Employee ID is not empty
+                if (employeeId) {
+                    // Send an AJAX request to the server
+                    fetch('/Users/GetUsernameByEmployeeId?employeeId=' + employeeId)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.getElementById("username").value = data.username;
+                                document.getElementById("username").setAttribute("readonly", true);
+                            } else {
+                                toastr.error('Username not found for the given Employee ID.', 'Error');
+                            }
+                        })
+                        .catch(error => {
+                            toastr.error('An error occurred while fetching the username.', 'Error');
+                            console.error('Error:', error);
+                        });
+                }
+            }
+        </script>
+
+     
+    }
